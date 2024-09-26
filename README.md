@@ -1,4 +1,4 @@
-# graph-theory-researc
+# graph-theory-research
 
 Installing boost: brew install boost
 

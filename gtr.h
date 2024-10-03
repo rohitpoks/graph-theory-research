@@ -12,4 +12,7 @@
 #include <boost/graph/graphviz.hpp>
 using namespace boost;
 
+typedef adjacency_list<vecS, vecS, undirectedS, property<vertex_color_t, default_color_type>> Graph;
+typedef graph_traits<Graph>::vertex_descriptor Vertex;
+
 #endif

@@ -1,6 +1,7 @@
 #include "gtr.h"
+#include "graphSketcher.h"
 
-int main() {
+Graph create_graph() {
   typedef std::pair<int, int> Edge;
   Edge special_graph_edges[] = {
     // k_4 edges
@@ -19,12 +20,13 @@ int main() {
     // special vertex 0: draw edge to every other vertex
   };
 
-  typedef adjacency_list<vecS, vecS, undirectedS, property<vertex_color_t, default_color_type>> Graph;
   Graph special_graph(special_graph_edges, special_graph_edges + sizeof(special_graph_edges)/sizeof(Edge), 7);
-  typedef graph_traits<Graph>::vertex_descriptor Vertex;
+  return special_graph;
+}
+
+void print_graph_as_dot(Graph graph) {
   std::ofstream output_graph_stream;
   output_graph_stream.open("special_example.dot");
-  write_graphviz(output_graph_stream, special_graph);
+  write_graphviz(output_graph_stream, graph);
   output_graph_stream.close();
-  return 0;
 }

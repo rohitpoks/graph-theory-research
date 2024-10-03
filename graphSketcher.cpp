@@ -1,12 +1,4 @@
-// use boost graph library for graph manipulation
-// use graphviz for graph visualization
-#include <iostream>                  // for std::cout
-#include <utility>                   // for std::pair
-#include <algorithm>                 // for std::for_each
-#include "boost/graph/graph_traits.hpp"
-#include "boost/graph/adjacency_list.hpp"
-#include "boost/graph/dijkstra_shortest_paths.hpp"
-#include <boost/graph/graphviz.hpp>
+#include "gtr.h"
 
 int main() {
   typedef std::pair<int, int> Edge;
@@ -27,7 +19,6 @@ int main() {
     // special vertex 0: draw edge to every other vertex
   };
 
-  using namespace boost;
   typedef adjacency_list<vecS, vecS, undirectedS, property<vertex_color_t, default_color_type>> Graph;
   Graph special_graph(special_graph_edges, special_graph_edges + sizeof(special_graph_edges)/sizeof(Edge), 7);
   typedef graph_traits<Graph>::vertex_descriptor Vertex;

@@ -1,3 +1,4 @@
 *.svg
 *.out
 *.dot
+*.ds_store

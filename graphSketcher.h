@@ -1,5 +1,5 @@
-#ifndef graphSketcher
-#define graphSketcher
+#ifndef GRAPH_SKETCHER_H
+#define GRAPH_SKETCHER_H
 
 #include "gtr.h"
 

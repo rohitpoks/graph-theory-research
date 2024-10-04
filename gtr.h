@@ -1,5 +1,5 @@
-#ifndef graphTheoryResearch
-#define graphTheoryResearch
+#ifndef GRAPH_THEORY_RESEARCH_H
+#define GRAPH_THEORY_RESEARCH_H
 
 // use boost graph library for graph manipulation
 // use graphviz for graph visualization

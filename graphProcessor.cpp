@@ -8,6 +8,29 @@
             //If there is no square between them, draw edge (v_i, v_j) in G...
             //...and move on to the next pair
 
+Graph& find_original_graph(Graph& coloring_graph, Vertex special_vertex) {
+    Graph g;
+    std::vector<std::vector<Vertex>> complete_graphs = find_adjacent_complete_graphs(special_vertex, coloring_graph);
+    int n = complete_graphs.size();
+    std::vector<Edge> edge_list;
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            for (const auto& u : complete_graphs[i]) {
+                for (const auto& w : complete_graphs[j]) {
+                    if (!has_square(u, w)) {
+                        edge_list.push_back(Edge(i, j));
+                        i++;
+                        j++; //?
+                    }
+                }
+            }
+        }
+    }
+}
+
+bool has_square(Vertex u, Vertex w) {
+    return false; //Placeholder
+}
 // Finding a square
 // Given vertices u and w:
 // For each vertex adjacent to u, which is not *,

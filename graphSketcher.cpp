@@ -2,7 +2,6 @@
 #include "graphSketcher.h"
 
 Graph create_graph() {
-  typedef std::pair<int, int> Edge;
   Edge special_graph_edges[] = {
     // k_4 edges
     Edge(0, 1),

@@ -93,8 +93,9 @@ Graph find_original_graph(Graph& coloring_graph, Vertex special_vertex) {
         }
     }
 
-    Edge* edge_list_array = &edge_list[0];
-    return Graph(edge_list_array, edge_list_array + sizeof(edge_list_array)/sizeof(Edge), n);
+    Edge edges_array[edge_list.size()];
+    std::copy(edge_list.begin(), edge_list.end(), edges_array);
+    return Graph(edges_array, edges_array + sizeof(edges_array)/sizeof(Edge), n);
 }
 // Finding complete graphs which include *:
 // allCompleteGraphs = {}

@@ -2,4 +2,4 @@
 *.out
 *.dot
 *.ds_store
-*.vscode
+.vscode/

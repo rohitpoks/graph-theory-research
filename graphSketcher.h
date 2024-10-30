@@ -4,6 +4,6 @@
 #include "gtr.h"
 
 Graph create_graph();
-void print_graph_as_dot(Graph graph);
+void print_graph_as_dot(Graph graph, const std::string& graph_name);
 
 #endif

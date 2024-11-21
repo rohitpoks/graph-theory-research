@@ -19,14 +19,34 @@ Graph create_graph() {
   //   // special vertex 0: draw edge to every other vertex
   // };
 
-  Edge special_graph_edges[] = {
-    Edge(0, 1),
-    Edge(1, 2),
-    Edge(2, 3),
-    Edge(3, 4),
-    Edge(4, 5),
-    Edge(5, 0),
-  };
+  // Edge special_graph_edges[] = {
+    // Edge(0, 1),
+    // Edge(1, 2),
+    // Edge(2, 3),
+    // Edge(3, 4),
+    // Edge(4, 5),
+    // Edge(5, 0),
+  //   Edge(0,1),
+  //   Edge(0,2),
+  //   Edge(0,3),
+  //   Edge(0,4),
+  //   Edge(0,5),
+
+  //   Edge(1,6),
+  //   Edge(1,7),
+
+  //   Edge(2,8),
+  //   Edge(3,9),
+  //   Edge(3,10),
+
+  //   Edge(4,5),
+  //   Edge(4,7),
+  //   Edge(4,9),
+
+  //   Edge(5,6),
+  //   Edge(5,8),
+  //   Edge(5,10),
+  // };
 
   // Edge special_graph_edges[] = {
   //   //First square
@@ -50,7 +70,15 @@ Graph create_graph() {
   //   Edge(8,0)
   // };
 
-  int number_of_vertices = 12;
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  // };
+  Edge special_graph_edges[] = {
+    Edge(0,1),
+    Edge(1,2),
+  };
+
+  int number_of_vertices = 3;
 
   Graph special_graph(special_graph_edges, special_graph_edges + sizeof(special_graph_edges)/sizeof(Edge), number_of_vertices);
   return special_graph;

@@ -3,7 +3,8 @@
 #define GRAPH_PROCESSOR_H
 
 void dfs(const Vertex& v_i, Vertex& special_vertex, std::set<Vertex>& seen, Graph& graph, std::vector<Vertex>& newCompleteGraph);
-std::vector<std::vector<Vertex> > find_adjacent_complete_graphs(Vertex& special_vertex, Graph& graph);
+std::vector<std::vector<Vertex> > find_adjacent_complete_graphs(const Vertex& special_vertex, const Graph& graph);
 Graph find_original_graph(Graph& coloring_graph, Vertex special_vertex);
+std::vector<Vertex> find_special_vertices_in_coloring(Graph& coloring_graph);
 
 #endif

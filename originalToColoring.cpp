@@ -2,7 +2,6 @@
 
 int next_vertex() {
   static int next = 0;
-  std::cout << "next called, and gonna return " << next << std::endl;
   return next++;
 }
 
@@ -30,10 +29,7 @@ bool is_valid_coloring(const Graph& original, const std::vector<int>& next_color
   return true;
 }
 
-// TODO: implement
 std::vector<int> lowest_permutation(std::vector<int> coloring) {
-  std::cout << "generating lowest perm for -> ";
-  print_coloring(coloring); std::cout << std::endl;
   std::map<int, int> colorsToLowestColor;
   int next_color = 0;
   for (int color : coloring) {
@@ -47,8 +43,7 @@ std::vector<int> lowest_permutation(std::vector<int> coloring) {
   for (int color : coloring) {
     result.push_back(colorsToLowestColor[color]);
   }
-  print_coloring(result);
-  std::cout << std::endl;
+
   return result;
 }
 
@@ -73,10 +68,6 @@ Graph coloringFromOriginal(const Graph& original, int k) {
     all_permutations.push_back(current_permutation);
   } while (std::next_permutation(current_permutation.begin(), current_permutation.end()));
 
-  // for (const auto& permutation: all_permutations) {
-  //   print_coloring(permutation);
-  //   std::cout << std::endl;
-  // }
   std::queue<std::vector<int> > bfs_queue;
   bfs_queue.push(lowest_permutation_of_initial_coloring);
   std::set<std::vector<int> > seen_colorings;
@@ -85,9 +76,6 @@ Graph coloringFromOriginal(const Graph& original, int k) {
   int n = num_vertices(original);
   while (!bfs_queue.empty()) {
     std::vector<int> alpha = bfs_queue.front();
-    std::cout << "next alpha is -> ";
-    print_coloring(alpha);
-    std::cout << std::endl;
     bfs_queue.pop();
     // create vertex for alpha immediately
     if (!vertex_number_from_coloring.count(alpha)) {
@@ -104,27 +92,17 @@ Graph coloringFromOriginal(const Graph& original, int k) {
         // color alpha to get an adjacent vertex beta
         std::vector<int> beta = alpha;
         beta[vertex] = nextColor;
-        std::cout << "trying to check beta coloring: ";
-        print_coloring(beta);
-        std::cout << std::endl;
         if (!is_valid_coloring(original, beta, vertex)) {
-          std::cout << "invalid coloring" << std::endl;
           continue;
         }
 
         if (!vertex_number_from_coloring.count(beta)) {
-          std::cout << "creating vertex for beta ";
-          print_coloring(beta);
-          std::cout << std::endl;
           int vertex_for_beta = next_vertex();
           add_vertex(coloring_graph);
           coloring_from_vertex_number[vertex_for_beta] = beta;
           vertex_number_from_coloring[beta] = vertex_for_beta;
         }
 
-        // if (seen_colorings.count(lowest_permutation(beta))) continue;
-        std::cout << std::endl;
-        std::cout << "continuing with beta" << std::endl;
         if (!seen_colorings.count(lowest_permutation(beta))) {
           seen_colorings.insert(lowest_permutation(beta));
           bfs_queue.push(lowest_permutation(beta));
@@ -166,12 +144,6 @@ Graph coloringFromOriginal(const Graph& original, int k) {
         }
       }
     }
-  }
-
-  for (const auto [vertex_number, coloring] : coloring_from_vertex_number) {
-    std::cout << vertex_number << ":";
-    print_coloring(coloring);
-    std::cout << std::endl;
   }
 
   return coloring_graph;

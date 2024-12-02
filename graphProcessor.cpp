@@ -1,7 +1,26 @@
 #include "gtr.h"
 #include "graphProcessor.h"
 
-void dfs(const Vertex& v_i, Vertex& special_vertex, std::set<Vertex>& seen, Graph& graph, std::vector<Vertex>& newCompleteGraph) {
+// returns 1 if v1 "majorizes" v2, 0 if v2 "majorizes" v1, or 2 if they are the same
+int first_majorizes_second(const std::vector<int> v1, const std::vector<int> v2) {
+    if (v1.size() > v2.size()) 
+        return 1;
+
+    if (v2.size() > v1.size()) 
+        return 0;
+
+    for (int i = 0; i < std::min(v1.size(), v2.size()); i++) {
+        if (v1[i] > v2[i]) 
+            return 1;
+
+        if (v1[i] < v2[i]) 
+            return 0;
+    }
+
+    return 2;
+}
+
+void dfs(const Vertex& v_i, const Vertex& special_vertex, std::set<Vertex>& seen, const Graph& graph, std::vector<Vertex>& newCompleteGraph) {
     if (seen.count(v_i)) {
         return;
     }
@@ -16,7 +35,22 @@ void dfs(const Vertex& v_i, Vertex& special_vertex, std::set<Vertex>& seen, Grap
     }
 }
 
-std::vector<std::vector<Vertex> > find_adjacent_complete_graphs(Vertex& special_vertex, Graph& graph) {
+// Finding complete graphs which include *:
+// allCompleteGraphs = {}
+// seen = {*}
+// for each v_i adjacent to *, which is not in seen,
+    // newCompleteGraph = {}
+    // dfs(v_i, seen, graph, newCompleteGraph)
+    // add newCompleteGraph to allCompleteGraphs
+
+// dfs(vertex, seen, graph, verticesInCompleteGraph):
+// if vertex in seen: return
+// add vertex to seen
+// add vertex to verticesInCompleteGraph
+// for neighbor in graph[vertex]:
+    // if neighbor adjacent to *, dfs(neighbor, deen, graph, verticesInCompleteGraph)
+
+std::vector<std::vector<Vertex> > find_adjacent_complete_graphs(const Vertex& special_vertex, const Graph& graph) {
     std::set<Vertex> seen;
     seen.insert(special_vertex);
     std::vector<std::vector<Vertex> > adjacent_vertices;
@@ -97,17 +131,33 @@ Graph find_original_graph(Graph& coloring_graph, Vertex special_vertex) {
     std::copy(edge_list.begin(), edge_list.end(), edges_array);
     return Graph(edges_array, edges_array + sizeof(edges_array)/sizeof(Edge), n);
 }
-// Finding complete graphs which include *:
-// allCompleteGraphs = {}
-// seen = {*}
-// for each v_i adjacent to *, which is not in seen,
-    // newCompleteGraph = {}
-    // dfs(v_i, seen, graph, newCompleteGraph)
-    // add newCompleteGraph to allCompleteGraphs
 
-// dfs(vertex, seen, graph, verticesInCompleteGraph):
-// if vertex in seen: return
-// add vertex to seen
-// add vertex to verticesInCompleteGraph
-// for neighbor in graph[vertex]:
-    // if neighbor adjacent to *, dfs(neighbor, deen, graph, verticesInCompleteGraph)
+std::vector<Vertex> find_special_vertices_in_coloring(Graph& coloring_graph) {
+    std::vector<std::vector<int> > adjacent_complete_graph_sizes_from_vertex;
+    for (const auto& vertex : boost::make_iterator_range(vertices(coloring_graph))) {
+        const auto& adjacent_complete_graphs = find_adjacent_complete_graphs(vertex, coloring_graph);
+        std::vector<int> sizes_of_adjacent_complete_graphs;
+        for (const auto& adjacent_complete_graph : adjacent_complete_graphs) {
+            sizes_of_adjacent_complete_graphs.push_back(adjacent_complete_graph.size());
+        }
+
+        adjacent_complete_graph_sizes_from_vertex.push_back(sizes_of_adjacent_complete_graphs);
+        // sort the vector that was just added to adjacent_complete_graph_sizes_from_vertex in non-increasing order
+        sort(adjacent_complete_graph_sizes_from_vertex.back().begin(), adjacent_complete_graph_sizes_from_vertex.back().end(), std::greater<int>());
+    }
+
+    std::vector<unsigned long> special_vertices;
+    std::vector<int> best_adjacent_complete_graph_sizes = {-1};
+    for (const auto& vertex : boost::make_iterator_range(vertices(coloring_graph))) {
+        const auto& current_adjacent_complete_graph_sizes = adjacent_complete_graph_sizes_from_vertex[vertex];
+        int current_majorizes_best = first_majorizes_second(current_adjacent_complete_graph_sizes, best_adjacent_complete_graph_sizes);
+        if (current_majorizes_best == 1) {
+            best_adjacent_complete_graph_sizes = current_adjacent_complete_graph_sizes;
+            special_vertices = {vertex};
+        } else if (current_majorizes_best == 2) {
+            special_vertices.push_back(vertex);
+        }
+    }
+
+    return special_vertices;
+}

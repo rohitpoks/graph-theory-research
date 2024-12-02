@@ -19,6 +19,16 @@ Graph create_graph() {
   //   // special vertex 0: draw edge to every other vertex
   // };
 
+  // six cycle:
+  Edge special_graph_edges[] = {
+      Edge(0, 1),
+      Edge(1, 2),
+      Edge(2, 3),
+      Edge(3, 4),
+      Edge(4, 5),
+      Edge(5, 0),
+  };
+
   // Edge special_graph_edges[] = {
     // Edge(0, 1),
     // Edge(1, 2),
@@ -73,20 +83,33 @@ Graph create_graph() {
   // Edge special_graph_edges[] = {
   //   Edge(0, 1),
   // };
-  Edge special_graph_edges[] = {
-    Edge(0,1),
-    Edge(1,2),
-  };
+  // Edge special_graph_edges[] = {
+  //   Edge(0,1),
+  //   Edge(1,2),
+  // };
 
-  int number_of_vertices = 3;
+  int number_of_vertices = 6;
 
   Graph special_graph(special_graph_edges, special_graph_edges + sizeof(special_graph_edges)/sizeof(Edge), number_of_vertices);
   return special_graph;
 }
 
-void print_graph_as_dot(Graph graph, const std::string& graph_name) {
+void print_graph_as_dot(const Graph& graph, const std::string& graph_name) {
   std::ofstream output_graph_stream;
   output_graph_stream.open(graph_name);
   write_graphviz(output_graph_stream, graph);
   output_graph_stream.close();
+}
+
+void print_graph_as_dot(const Graph& graph, const std::string& graph_name, const boost::dynamic_properties& dp) {
+  std::ofstream output_graph_stream;
+  output_graph_stream.open(graph_name);
+  write_graphviz_dp(output_graph_stream, graph, dp);
+  output_graph_stream.close();
+}
+
+void print_graph_as_graphml(const Graph& graph, const std::string& graph_name, const boost::dynamic_properties& dp) {
+  std::ofstream output_graph_stream;
+  output_graph_stream.open(graph_name);
+  write_graphml(output_graph_stream, graph, dp);
 }

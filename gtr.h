@@ -14,6 +14,8 @@
 #include <boost/graph/edge_coloring.hpp>
 #include <boost/graph/sequential_vertex_coloring.hpp>
 #include  <boost/graph/properties.hpp>
+#include <assert.h>
+
 using namespace boost;
 
 typedef adjacency_list<vecS, vecS, undirectedS, property<vertex_color_t, std::string>> Graph;

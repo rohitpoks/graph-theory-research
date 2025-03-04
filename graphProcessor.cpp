@@ -2,9 +2,9 @@
 #include "graphProcessor.h"
 
 // simulate a random walk for given number of simulations
-long double simulate_random_walk(const Graph& graph, int number_of_simulations) {
+long double simulate_random_walk(const Graph& graph, int number_of_simulations, std::vector<int>& special_vertices_vector) {
     srand(time(0));
-    std::vector<Vertex> special_vertices_vector = find_special_vertices_in_coloring(graph);
+    // std::vector<Vertex> special_vertices_vector = find_special_vertices_in_coloring(graph);
     std::set<Vertex> special_vertices = std::set<Vertex>(special_vertices_vector.begin(), special_vertices_vector.end());
     int n = boost::num_vertices(graph);
     long long sum_of_distances = 0; 
@@ -174,14 +174,16 @@ std::vector<Vertex> find_special_vertices_in_coloring(const Graph& coloring_grap
     }
 
     std::vector<unsigned long> special_vertices;
-    std::vector<int> best_adjacent_complete_graph_sizes = {-1};
+    std::vector<int> best_adjacent_complete_graph_sizes = {};
     for (const auto& vertex : boost::make_iterator_range(vertices(coloring_graph))) {
         const auto& current_adjacent_complete_graph_sizes = adjacent_complete_graph_sizes_from_vertex[vertex];
         int current_majorizes_best = first_majorizes_second(current_adjacent_complete_graph_sizes, best_adjacent_complete_graph_sizes);
         if (current_majorizes_best == 1) {
+            // found a more special vertex
             best_adjacent_complete_graph_sizes = current_adjacent_complete_graph_sizes;
             special_vertices = {vertex};
         } else if (current_majorizes_best == 2) {
+            // found a vertex that is as good as the best one so far
             special_vertices.push_back(vertex);
         }
     }

@@ -8,7 +8,7 @@
       <data key="key1">0</data>
     </node>
     <node id="n1">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">1</data>
     </node>
     <node id="n2">
@@ -16,7 +16,7 @@
       <data key="key1">2</data>
     </node>
     <node id="n3">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">3</data>
     </node>
     <node id="n4">
@@ -24,7 +24,7 @@
       <data key="key1">4</data>
     </node>
     <node id="n5">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">5</data>
     </node>
     <node id="n6">
@@ -32,7 +32,7 @@
       <data key="key1">6</data>
     </node>
     <node id="n7">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">7</data>
     </node>
     <node id="n8">
@@ -40,7 +40,7 @@
       <data key="key1">8</data>
     </node>
     <node id="n9">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">9</data>
     </node>
     <node id="n10">
@@ -48,7 +48,7 @@
       <data key="key1">10</data>
     </node>
     <node id="n11">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">11</data>
     </node>
     <node id="n12">
@@ -56,7 +56,7 @@
       <data key="key1">12</data>
     </node>
     <node id="n13">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">13</data>
     </node>
     <node id="n14">
@@ -64,7 +64,7 @@
       <data key="key1">14</data>
     </node>
     <node id="n15">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">15</data>
     </node>
     <node id="n16">
@@ -72,7 +72,7 @@
       <data key="key1">16</data>
     </node>
     <node id="n17">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">17</data>
     </node>
     <node id="n18">
@@ -80,7 +80,7 @@
       <data key="key1">18</data>
     </node>
     <node id="n19">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">19</data>
     </node>
     <node id="n20">
@@ -88,7 +88,7 @@
       <data key="key1">20</data>
     </node>
     <node id="n21">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">21</data>
     </node>
     <node id="n22">
@@ -96,7 +96,7 @@
       <data key="key1">22</data>
     </node>
     <node id="n23">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">23</data>
     </node>
     <node id="n24">
@@ -104,7 +104,7 @@
       <data key="key1">24</data>
     </node>
     <node id="n25">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">25</data>
     </node>
     <node id="n26">
@@ -112,7 +112,7 @@
       <data key="key1">26</data>
     </node>
     <node id="n27">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">27</data>
     </node>
     <node id="n28">
@@ -120,7 +120,7 @@
       <data key="key1">28</data>
     </node>
     <node id="n29">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">29</data>
     </node>
     <node id="n30">
@@ -128,7 +128,7 @@
       <data key="key1">30</data>
     </node>
     <node id="n31">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">31</data>
     </node>
     <node id="n32">
@@ -136,7 +136,7 @@
       <data key="key1">32</data>
     </node>
     <node id="n33">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">33</data>
     </node>
     <node id="n34">
@@ -144,7 +144,7 @@
       <data key="key1">34</data>
     </node>
     <node id="n35">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">35</data>
     </node>
     <node id="n36">
@@ -152,7 +152,7 @@
       <data key="key1">36</data>
     </node>
     <node id="n37">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">37</data>
     </node>
     <node id="n38">
@@ -160,7 +160,7 @@
       <data key="key1">38</data>
     </node>
     <node id="n39">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">39</data>
     </node>
     <node id="n40">
@@ -168,7 +168,7 @@
       <data key="key1">40</data>
     </node>
     <node id="n41">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">41</data>
     </node>
     <node id="n42">
@@ -176,7 +176,7 @@
       <data key="key1">42</data>
     </node>
     <node id="n43">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">43</data>
     </node>
     <node id="n44">
@@ -184,7 +184,7 @@
       <data key="key1">44</data>
     </node>
     <node id="n45">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">45</data>
     </node>
     <node id="n46">
@@ -192,7 +192,7 @@
       <data key="key1">46</data>
     </node>
     <node id="n47">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">47</data>
     </node>
     <node id="n48">
@@ -2788,99 +2788,99 @@
       <data key="key1">695</data>
     </node>
     <node id="n696">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">696</data>
     </node>
     <node id="n697">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">697</data>
     </node>
     <node id="n698">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">698</data>
     </node>
     <node id="n699">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">699</data>
     </node>
     <node id="n700">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">700</data>
     </node>
     <node id="n701">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">701</data>
     </node>
     <node id="n702">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">702</data>
     </node>
     <node id="n703">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">703</data>
     </node>
     <node id="n704">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">704</data>
     </node>
     <node id="n705">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">705</data>
     </node>
     <node id="n706">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">706</data>
     </node>
     <node id="n707">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">707</data>
     </node>
     <node id="n708">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">708</data>
     </node>
     <node id="n709">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">709</data>
     </node>
     <node id="n710">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">710</data>
     </node>
     <node id="n711">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">711</data>
     </node>
     <node id="n712">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">712</data>
     </node>
     <node id="n713">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">713</data>
     </node>
     <node id="n714">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">714</data>
     </node>
     <node id="n715">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">715</data>
     </node>
     <node id="n716">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">716</data>
     </node>
     <node id="n717">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">717</data>
     </node>
     <node id="n718">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">718</data>
     </node>
     <node id="n719">
-      <data key="key0"></data>
+      <data key="key0">red</data>
       <data key="key1">719</data>
     </node>
     <edge id="e0" source="n0" target="n1">

@@ -1,6 +1,8 @@
 #include "originalToColoring.h"
 #include <math.h>
 
+// ASSUMES K > KAI
+
 int next_vertex() {
   static int next = 0;
   return next++;
@@ -65,12 +67,12 @@ std::vector<int> lowest_permutation(std::vector<int> coloring) {
 }
 
 void populate_class_to_num_vertices(std::map<int, int>& class_to_num_vertices, int total_vertices, std::map<int, std::vector<int> >& coloring_from_vertex_number, std::map<std::vector<int>, int>& coloring_class_number_from_lowest_permutation) {
-  for (int v = 0; v < total_vertices; v++) {
-    class_to_num_vertices[coloring_class_number_from_lowest_permutation[lowest_permutation(coloring_from_vertex_number[v])]]++;
+  for (const auto& coloring : coloring_from_vertex_number) {
+    class_to_num_vertices[coloring_class_number_from_lowest_permutation[lowest_permutation(coloring.second)]]++;
   }
 }
 
-Graph coloringFromOriginal(const Graph& original, int k, std::map<int, std::map<int, int> >& adj_list, std::set<int>& special_vertex_classes, std::map<int, int>& class_to_num_vertices) { 
+Graph coloringFromOriginal(const Graph& original, int k, std::map<int, std::map<int, int> >& adj_list, std::set<int>& special_vertex_classes, std::map<int, int>& class_to_num_vertices, std::vector<int>& special_vertices) { 
   std::map<int, std::vector<int> > coloring_from_vertex_number;
   std::map<std::vector<int>, int> vertex_number_from_coloring;
   std::map<std::vector<int>, int> coloring_class_number_from_lowest_permutation;
@@ -191,17 +193,27 @@ Graph coloringFromOriginal(const Graph& original, int k, std::map<int, std::map<
         if (edge(u, neighbor, coloring_graph).second) {
             int v = coloring_class_number_from_lowest_permutation[lowest_permutation(coloring_from_vertex_number[neighbor])];
             adj_list[u][v]++;
+            adj_list[v][u]++;
         }
     }
   }
 
   int chromatic_number = INT_MAX;
+  // get chromatic number
   for (auto& seen_coloring: seen_colorings) {
     int number_of_colors = find_num_colors(seen_coloring);
     chromatic_number = std::min(chromatic_number, number_of_colors);
   }
 
 
+  // get special vertices
+  for (int vertex = 0; vertex < num_vertices(coloring_graph); vertex++) {
+    if (is_special_class(coloring_from_vertex_number[vertex], chromatic_number)) {
+      special_vertices.push_back(vertex);
+    }
+  }
+
+  // get all special vertex classes
   for (auto& seen_coloring: seen_colorings) {
     if (is_special_class(seen_coloring, chromatic_number)) {
       special_vertex_classes.insert(coloring_class_number_from_lowest_permutation[seen_coloring]);

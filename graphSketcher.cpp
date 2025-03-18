@@ -115,10 +115,10 @@ Graph create_graph() {
   // };
 
   // line graph
-  // Edge special_graph_edges[] = {
-  //   Edge(0, 1),
-  //   Edge(1, 2),
-  // };
+  Edge special_graph_edges[] = {
+    Edge(0, 1),
+    Edge(1, 2),
+  };
 
   // 5 cycle with extra edge
   // Edge special_graph_edges[] = {
@@ -140,15 +140,15 @@ Graph create_graph() {
   // }; 
 
   // incomplete k4
-  Edge special_graph_edges[] = {
-    Edge(0,1),
-    Edge(1,2),
-    Edge(2,3),
-    Edge(0,3),
-    Edge(1,3),
-  };
+  // Edge special_graph_edges[] = {
+  //   Edge(0,1),
+  //   Edge(1,2),
+  //   Edge(2,3),
+  //   Edge(0,3),
+  //   Edge(1,3),
+  // };
 
-  int number_of_vertices = 4;
+  int number_of_vertices = 3;
   Graph special_graph(special_graph_edges, special_graph_edges + sizeof(special_graph_edges)/sizeof(Edge), number_of_vertices);
   return special_graph;
 }

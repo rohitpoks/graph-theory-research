@@ -72,6 +72,22 @@ void populate_class_to_num_vertices(std::map<int, int>& class_to_num_vertices, i
   }
 }
 
+void populate_adj_list(std::map<int, std::map<int, int> >& adj_list, std::set<std::vector<int> >& seen_colorings, std::map<std::vector<int>, int >& vertex_number_from_coloring, std::map<int, std::vector<int> >& coloring_from_vertex_number, Graph& coloring_graph, std::map<std::vector<int>, int>& coloring_class_number_from_lowest_permutation) {
+  // for every seen coloring, make entry in adj list
+  for (const auto& seen_coloring : seen_colorings) {
+    int u = vertex_number_from_coloring[seen_coloring];
+    int c = coloring_class_number_from_lowest_permutation[seen_coloring];
+    // for every neighbor of u, update adj list
+    for (const auto& e : make_iterator_range(out_edges(u, coloring_graph))) {
+        const auto& neighbor = target(e, coloring_graph);
+        if (edge(u, neighbor, coloring_graph).second) {
+            int v = coloring_class_number_from_lowest_permutation[lowest_permutation(coloring_from_vertex_number[neighbor])];
+            adj_list[c][v]++;
+        }
+    }
+  }
+}
+
 Graph coloringFromOriginal(const Graph& original, int k, std::map<int, std::map<int, int> >& adj_list, std::set<int>& special_vertex_classes, std::map<int, int>& class_to_num_vertices, std::vector<int>& special_vertices) { 
   std::map<int, std::vector<int> > coloring_from_vertex_number;
   std::map<std::vector<int>, int> vertex_number_from_coloring;
@@ -192,8 +208,6 @@ Graph coloringFromOriginal(const Graph& original, int k, std::map<int, std::map<
         const auto& neighbor = target(e, coloring_graph);
         if (edge(u, neighbor, coloring_graph).second) {
             int v = coloring_class_number_from_lowest_permutation[lowest_permutation(coloring_from_vertex_number[neighbor])];
-            adj_list[u][v]++;
-            adj_list[v][u]++;
         }
     }
   }
@@ -220,7 +234,7 @@ Graph coloringFromOriginal(const Graph& original, int k, std::map<int, std::map<
     }
   }
 
-
+  populate_adj_list(adj_list, seen_colorings, vertex_number_from_coloring, coloring_from_vertex_number, coloring_graph, coloring_class_number_from_lowest_permutation);
   populate_class_to_num_vertices(class_to_num_vertices, num_vertices(coloring_graph), coloring_from_vertex_number, coloring_class_number_from_lowest_permutation);
   return coloring_graph;
 }

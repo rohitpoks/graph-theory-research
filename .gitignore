@@ -3,3 +3,4 @@
 *.dot
 *.ds_store
 .vscode/
+*.graphml

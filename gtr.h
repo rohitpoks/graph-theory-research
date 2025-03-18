@@ -10,9 +10,15 @@
 #include "boost/graph/adjacency_list.hpp"
 #include "boost/graph/dijkstra_shortest_paths.hpp"
 #include <boost/graph/graphviz.hpp>
+#include <boost/graph/graphml.hpp>
+#include <boost/graph/edge_coloring.hpp>
+#include <boost/graph/sequential_vertex_coloring.hpp>
+#include  <boost/graph/properties.hpp>
+#include <assert.h>
+
 using namespace boost;
 
-typedef adjacency_list<vecS, vecS, undirectedS, property<vertex_color_t, default_color_type>> Graph;
+typedef adjacency_list<vecS, vecS, undirectedS, property<vertex_color_t, std::string>> Graph;
 typedef graph_traits<Graph>::vertex_descriptor Vertex;
 typedef std::pair<int, int> Edge;
 

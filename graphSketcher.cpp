@@ -20,14 +20,44 @@ Graph create_graph() {
   // };
 
   // six cycle:
-  Edge special_graph_edges[] = {
-      Edge(0, 1),
-      Edge(1, 2),
-      Edge(2, 3),
-      Edge(3, 4),
-      Edge(4, 5),
-      Edge(5, 0),
-  };
+  // Edge special_graph_edges[] = {
+  //     Edge(0, 1),
+  //     Edge(1, 2),
+  //     Edge(2, 3),
+  //     Edge(3, 4),
+  //     Edge(4, 5),
+  //     Edge(5, 0),
+  // };
+
+  // three cycle with extra edge:
+  // Edge special_graph_edges[] = {
+  //     Edge(0, 1),
+  //     Edge(1, 2),
+  //     Edge(2, 0),
+  //     Edge(3, 0),
+  // };
+
+  // seven cycle with extra edge:
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(1, 2),
+  //   Edge(2, 3),
+  //   Edge(3, 4),
+  //   Edge(4, 5),
+  //   Edge(5, 6),
+  //   Edge(6, 0),
+  //   Edge(0, 7),
+  // };
+
+  // six cycle
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(1, 2),
+  //   Edge(2, 3),
+  //   Edge(3, 4),
+  //   Edge(4, 5),
+  //   Edge(5, 0),
+  // };
 
   // Edge special_graph_edges[] = {
     // Edge(0, 1),
@@ -83,13 +113,42 @@ Graph create_graph() {
   // Edge special_graph_edges[] = {
   //   Edge(0, 1),
   // };
+
+  // line graph
+  Edge special_graph_edges[] = {
+    Edge(0, 1),
+    Edge(1, 2),
+  };
+
+  // 5 cycle with extra edge
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(1, 2),
+  //   Edge(2, 3),
+  //   Edge(3, 4),
+  //   Edge(4, 0),
+  //   Edge(5, 0),
+  // };
+
+  // K(2,3)->special
+  // Edge special_graph_edges[] = {
+  //   Edge(0,2),
+  //   Edge(0,3),
+  //   Edge(0,4),
+  //   Edge(1,2),
+  //   Edge(1,3),
+  // }; 
+
+  // incomplete k4
   // Edge special_graph_edges[] = {
   //   Edge(0,1),
   //   Edge(1,2),
+  //   Edge(2,3),
+  //   Edge(0,3),
+  //   Edge(1,3),
   // };
 
-  int number_of_vertices = 6;
-
+  int number_of_vertices = 3;
   Graph special_graph(special_graph_edges, special_graph_edges + sizeof(special_graph_edges)/sizeof(Edge), number_of_vertices);
   return special_graph;
 }

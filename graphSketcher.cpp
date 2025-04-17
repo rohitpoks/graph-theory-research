@@ -48,6 +48,21 @@ Graph create_graph() {
   //   Edge(6, 0),
   //   Edge(0, 7),
   // };
+  
+
+   // nine cycle with extra edge:
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(1, 2),
+  //   Edge(2, 3),
+  //   Edge(3, 4),
+  //   Edge(4, 5),
+  //   Edge(5, 6),
+  //   Edge(6, 7),
+  //   Edge(7, 8),
+  //   Edge(8, 0),
+  //   Edge(0, 9),
+  // };
 
   // six cycle
   // Edge special_graph_edges[] = {
@@ -115,10 +130,70 @@ Graph create_graph() {
   // };
 
   // line graph
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(1, 2),
+  // };
+
+
+  // line graph 7 vertices
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(1, 2),
+  //   Edge(2, 3),
+  //   Edge(3, 4),
+  //   Edge(4, 5),
+  //   Edge(5, 6)
+  // };
+
+  // line graph with 4 vertices
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(1, 2),
+  //   Edge(2, 3),
+  // };
+
+  // S6
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(0, 2),
+  //   Edge(0, 3),
+  //   Edge(0, 4),
+  //   Edge(0, 5),
+  //   Edge(0, 6),
+  // };
+
+  // S7
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(0, 2),
+  //   Edge(0, 3),
+  //   Edge(0, 4),
+  //   Edge(0, 5),
+  //   Edge(0, 6),
+  //   Edge(0, 7),
+  // };
+
+  // S7
   Edge special_graph_edges[] = {
     Edge(0, 1),
-    Edge(1, 2),
+    Edge(0, 2),
+    Edge(0, 3),
+    Edge(0, 4),
+    Edge(0, 5),
+    Edge(0, 6),
+    Edge(0, 7),
   };
+
+  // 3 cycle with line graph IMPORTANT EXAMPLE
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(1, 2),
+  //   Edge(2, 3),
+  //   Edge(3, 4),
+  //   Edge(4, 5),
+  //   Edge(3, 5),
+  // };
 
   // 5 cycle with extra edge
   // Edge special_graph_edges[] = {
@@ -129,6 +204,7 @@ Graph create_graph() {
   //   Edge(4, 0),
   //   Edge(5, 0),
   // };
+
 
   // K(2,3)->special
   // Edge special_graph_edges[] = {
@@ -148,7 +224,7 @@ Graph create_graph() {
   //   Edge(1,3),
   // };
 
-  int number_of_vertices = 3;
+  int number_of_vertices = 4;
   Graph special_graph(special_graph_edges, special_graph_edges + sizeof(special_graph_edges)/sizeof(Edge), number_of_vertices);
   return special_graph;
 }

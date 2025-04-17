@@ -15,6 +15,7 @@
 #include <boost/graph/sequential_vertex_coloring.hpp>
 #include  <boost/graph/properties.hpp>
 #include <assert.h>
+#include <random>
 
 using namespace boost;
 

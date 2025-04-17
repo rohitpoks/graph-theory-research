@@ -1,6 +1,81 @@
 #include "gtr.h"
 #include "graphProcessor.h"
 
+// perform a random walk and return # of steps until a special vertex is reached
+int random_walk_with_bfs(const Graph& graph, std::vector<int>& special_vertices_vector, std::vector<int>& n_complete_non_special_vertices_vector) { 
+    std::set<Vertex> special_vertices = std::set<Vertex>(special_vertices_vector.begin(), special_vertices_vector.end());
+    std::set<Vertex> n_complete_non_special_vertices = std::set<Vertex>(n_complete_non_special_vertices_vector.begin(), n_complete_non_special_vertices_vector.end());
+    int n = num_vertices(graph);
+    int walk_length = 0;
+    int current_vertex = rand() % n;
+    while (!special_vertices.count(current_vertex) && !n_complete_non_special_vertices.count(current_vertex)) {
+        assert(current_vertex >= 0 && current_vertex < n);
+        auto [neighbors_begin, neighbors_end] = boost::adjacent_vertices(current_vertex, graph);
+        int number_of_neighbors = std::distance(neighbors_begin, neighbors_end);
+        neighbors_begin += (rand() % number_of_neighbors);
+        current_vertex = *neighbors_begin;
+        walk_length++;
+    }
+
+    if (special_vertices.count(current_vertex)) return walk_length;
+    int dist_from_blue = 0;
+    int num_visited_vertices = 0;
+    // start bfs from blue vertex
+    queue<int> q;
+    std::set<int> seen;
+    q.push(current_vertex);
+    seen.insert(current_vertex);
+    while (!q.empty()) {
+        int size = q.size();
+        while (size--) {
+            int next = q.front();
+            q.pop();
+            num_visited_vertices++;
+            if (special_vertices.count(next)) {
+                return walk_length + num_visited_vertices;
+            }
+
+            boost::graph_traits<Graph>::adjacency_iterator it, end;
+            std::vector<int> adj;
+            for (tie(it, end) = adjacent_vertices(next, graph); it != end; ++it) {
+                int neighbor = *it;
+                adj.push_back(neighbor);
+            }
+
+            // TODO: optimize this
+            auto rd = std::random_device {}; 
+            auto rng = std::default_random_engine { rd() };
+            std::shuffle(std::begin(adj), std::end(adj), rng);
+
+            for (int neighbor : adj) {
+                if (seen.count(neighbor)) continue;
+                seen.insert(neighbor);
+                q.push(neighbor);
+            }
+        }
+
+        dist_from_blue++;
+    }
+
+    // code should never reach this point!
+    // this might imply there are no red vertices in the graph :(
+    assert(1 != 1);
+    return walk_length + num_visited_vertices;
+}
+
+
+long double simulate_random_walk_with_bfs(const Graph& graph, int number_of_simulations, std::vector<int>& special_vertices_vector, std::vector<int>& n_complete_non_special_vertices_vector) {
+    srand(time(0));
+    long double total = 0;
+    for (int i = 0; i < number_of_simulations; i++) {
+        int next_walk_length = random_walk_with_bfs(graph, special_vertices_vector, n_complete_non_special_vertices_vector);
+        total += next_walk_length;
+    }
+
+    return total / (long double) number_of_simulations;
+}
+
+
 // simulate a random walk for given number of simulations
 long double simulate_random_walk(const Graph& graph, int number_of_simulations, std::vector<int>& special_vertices_vector) {
     srand(time(0));
@@ -19,7 +94,6 @@ long double simulate_random_walk(const Graph& graph, int number_of_simulations, 
             neighbors_begin += (rand() % number_of_neighbors);
             current_vertex = *neighbors_begin;
             path_length++;
-            // std::cout << "path length is " << path_length << std::endl;
         }
 
         sum_of_distances += path_length;
@@ -159,6 +233,19 @@ Graph find_original_graph(Graph& coloring_graph, Vertex special_vertex) {
     return Graph(edges_array, edges_array + sizeof(edges_array)/sizeof(Edge), n);
 }
 
+void find_n_complete_non_reconstructible_non_special_vertices(const Graph& coloring_graph, std::vector<int>& special_vertices, std::vector<int>& reconstructible_vertices, int num_vertices_in_original_graph, std::vector<int>& result) {
+    std::vector<std::vector<int> > adjacent_complete_graph_sizes_from_vertex;
+    std::set<int> special_vertices_set = std::set<int>(special_vertices.begin(), special_vertices.end());
+    std::set<int> reconstructible_vertices_set = std::set<int>(reconstructible_vertices.begin(), reconstructible_vertices.end());
+    for (const auto& vertex : boost::make_iterator_range(vertices(coloring_graph))) {
+        const auto& adjacent_complete_graphs = find_adjacent_complete_graphs(vertex, coloring_graph);
+        if (adjacent_complete_graphs.size() == num_vertices_in_original_graph) {
+            if (special_vertices_set.count(vertex) || reconstructible_vertices_set.count(vertex)) continue;
+            result.push_back(vertex);
+        }
+    }
+}
+
 std::vector<Vertex> find_special_vertices_in_coloring(const Graph& coloring_graph) {
     std::vector<std::vector<int> > adjacent_complete_graph_sizes_from_vertex;
     for (const auto& vertex : boost::make_iterator_range(vertices(coloring_graph))) {
@@ -189,4 +276,4 @@ std::vector<Vertex> find_special_vertices_in_coloring(const Graph& coloring_grap
     }
 
     return special_vertices;
-}
+}   

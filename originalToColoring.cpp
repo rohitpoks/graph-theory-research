@@ -43,8 +43,9 @@ int find_num_colors(const std::vector<int>& coloring) {
 }
 
 
-bool is_special_class(const std::vector<int>& coloring, int chromatic_number) {
-  return find_num_colors(coloring) == chromatic_number;
+bool is_special_class(const std::vector<int>& coloring, int k) {
+  // type 1 special: return if the number of colors is strictly less than k, assuming k > chromatic number
+  return find_num_colors(coloring) < k;
 }
 
 
@@ -64,6 +65,40 @@ std::vector<int> lowest_permutation(std::vector<int> coloring) {
   }
 
   return result;
+}
+
+bool can_reconstruct_original(std::vector<int>& coloring, const Graph& original, int k) {
+  graph_traits<Graph>::edge_iterator ei, ei_end;
+  std::set<int> all_colors;
+  for (int i = 0; i < k; i++) all_colors.insert(i);
+  std::vector<std::set<int> > free_colors_for_vertex(num_vertices(original), all_colors);
+  for (tie(ei, ei_end) = edges(original); ei != ei_end; ++ei) {
+    auto u = source(*ei, original);
+    auto v = target(*ei, original);
+    // erase color[u], color[v] from the set of free colors for u
+    free_colors_for_vertex[u].erase(coloring[u]);
+    free_colors_for_vertex[u].erase(coloring[v]);
+    // erase color[u], color[v] from the set of free colors for v
+    free_colors_for_vertex[v].erase(coloring[u]);
+    free_colors_for_vertex[v].erase(coloring[v]);
+  }
+
+  for (tie(ei, ei_end) = edges(original); ei != ei_end; ++ei) {
+    auto u = source(*ei, original);
+    auto v = target(*ei, original);
+    auto& set_of_free_colors_for_u = free_colors_for_vertex[u];
+    auto& set_of_free_colors_for_v = free_colors_for_vertex[v];
+    bool share_common_free_color = false;
+    for (int i : set_of_free_colors_for_u) {
+      if (set_of_free_colors_for_v.count(i)) share_common_free_color = true;
+    }
+
+    if (!share_common_free_color) {
+      return false;
+    }
+
+  }
+  return true;
 }
 
 void populate_class_to_num_vertices(std::map<int, int>& class_to_num_vertices, int total_vertices, std::map<int, std::vector<int> >& coloring_from_vertex_number, std::map<std::vector<int>, int>& coloring_class_number_from_lowest_permutation) {
@@ -88,7 +123,7 @@ void populate_adj_list(std::map<int, std::map<int, int> >& adj_list, std::set<st
   }
 }
 
-Graph coloringFromOriginal(const Graph& original, int k, std::map<int, std::map<int, int> >& adj_list, std::set<int>& special_vertex_classes, std::map<int, int>& class_to_num_vertices, std::vector<int>& special_vertices) { 
+Graph coloringFromOriginal(const Graph& original, int k, std::map<int, std::map<int, int> >& adj_list, std::set<int>& special_vertex_classes, std::map<int, int>& class_to_num_vertices, std::vector<int>& special_vertices, std::vector<int>& reconstructible_vertices) { 
   std::map<int, std::vector<int> > coloring_from_vertex_number;
   std::map<std::vector<int>, int> vertex_number_from_coloring;
   std::map<std::vector<int>, int> coloring_class_number_from_lowest_permutation;
@@ -222,14 +257,19 @@ Graph coloringFromOriginal(const Graph& original, int k, std::map<int, std::map<
 
   // get special vertices
   for (int vertex = 0; vertex < num_vertices(coloring_graph); vertex++) {
-    if (is_special_class(coloring_from_vertex_number[vertex], chromatic_number)) {
+    if (is_special_class(coloring_from_vertex_number[vertex], k)) {
       special_vertices.push_back(vertex);
+    } else {
+      // check for type 2 special vertices, num_colors = k here
+      if (can_reconstruct_original(coloring_from_vertex_number[vertex], original, k)) {
+        reconstructible_vertices.push_back(vertex);
+      }
     }
   }
 
   // get all special vertex classes
   for (auto& seen_coloring: seen_colorings) {
-    if (is_special_class(seen_coloring, chromatic_number)) {
+    if (is_special_class(seen_coloring, k)) {
       special_vertex_classes.insert(coloring_class_number_from_lowest_permutation[seen_coloring]);
     }
   }

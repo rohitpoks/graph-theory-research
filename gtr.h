@@ -19,6 +19,7 @@
 
 using namespace boost;
 
+// typedef adjacency_list<vecS, setS, undirectedS, property<vertex_color_t, std::string>> Graph;
 typedef adjacency_list<vecS, vecS, undirectedS, property<vertex_color_t, std::string>> Graph;
 typedef graph_traits<Graph>::vertex_descriptor Vertex;
 typedef std::pair<int, int> Edge;

@@ -1,6 +1,61 @@
 #include "gtr.h"
 #include "graphSketcher.h"
 
+auto select_random(const std::set<int> &s, size_t n) {
+  auto it = std::begin(s);
+  // 'advance' the iterator n times
+  std::advance(it,n);
+  return it;
+}
+
+// generate a random tree of size n and return max(du + dv)
+std::pair<Graph, int> get_random_tree(int n) {
+  srand(time(NULL));
+  int maximal_degree = 0;
+  std::vector<int> degree(n);
+  std::set<int> connected = {0};
+  std::set<int> isolated = {};
+  std::vector<std::vector<int> > tree(n);
+  for (int i = 1; i < n; i++) {
+    isolated.insert(i);
+  }
+
+
+  std::cout << "Tree consists of the following edges:" << std::endl;
+  for (int i = 0; i < n - 1; i++) {
+    // pick an isolated vertex at random
+    auto r = rand() % isolated.size();
+    auto u_itr = select_random(isolated, r);
+    auto u = *u_itr;
+    // make an edge from a random connected vertex to this vertex
+    r = rand() % connected.size();
+    auto v_itr = select_random(connected, r);
+    auto v = *v_itr;
+    tree[u].push_back(v);
+    tree[v].push_back(u);
+    degree[u]++;
+    degree[v]++;
+    std::cout << u << ", " << v << std::endl;
+    isolated.erase(u_itr);
+    connected.insert(u);
+  }
+
+  std::cout << std::endl;
+  Edge tree_edges[2 * n - 2];
+  int next = 0;
+  for (int u = 0; u < n; u++) {
+    for (int v : tree[u]) {
+      maximal_degree = std::max(maximal_degree, degree[u] + degree[v]);
+      tree_edges[next] = Edge(u, v);
+      next++;
+    }
+  }
+  
+  std::cout << std::endl;
+  Graph final_tree(tree_edges, tree_edges + sizeof(tree_edges)/sizeof(Edge), n);
+  return {final_tree, maximal_degree};
+}
+
 Graph create_graph() {
   // Edge special_graph_edges[] = {
   //   // k_4 edges
@@ -133,17 +188,53 @@ Graph create_graph() {
   // Edge special_graph_edges[] = {
   //   Edge(0, 1),
   //   Edge(1, 2),
+  //   Edge(2, 3),
   // };
 
 
-  // line graph 7 vertices
+// seven cycle:
   // Edge special_graph_edges[] = {
   //   Edge(0, 1),
   //   Edge(1, 2),
   //   Edge(2, 3),
   //   Edge(3, 4),
   //   Edge(4, 5),
-  //   Edge(5, 6)
+  //   Edge(5, 6),
+  //   Edge(6, 0),
+  // };
+
+  // five cycle:
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(1, 2),
+  //   Edge(2, 3),
+  //   Edge(3, 4),
+  //   Edge(4, 0),
+  // };
+
+
+
+  // line graph 6 vertices
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(1, 2),
+  //   Edge(2, 3),
+  //   Edge(3, 4),
+  //   Edge(4, 5),
+  // };
+
+  // K_2_3
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 2),
+  //   Edge(0, 3),
+  //   Edge(0, 4),
+  //   Edge(1, 2),
+  //   Edge(1, 3),
+  //   Edge(1, 4),
+  // };
+
+  // 3 isolated vertices
+  // Edge special_graph_edges[] = {
   // };
 
   // line graph with 4 vertices
@@ -175,15 +266,15 @@ Graph create_graph() {
   // };
 
   // S7
-  Edge special_graph_edges[] = {
-    Edge(0, 1),
-    Edge(0, 2),
-    Edge(0, 3),
-    Edge(0, 4),
-    Edge(0, 5),
-    Edge(0, 6),
-    Edge(0, 7),
-  };
+  // Edge special_graph_edges[] = {
+  //   Edge(0, 1),
+  //   Edge(0, 2),
+  //   Edge(0, 3),
+  //   Edge(0, 4),
+  //   Edge(0, 5),
+  //   Edge(0, 6),
+  //   Edge(0, 7),
+  // };
 
   // 3 cycle with line graph IMPORTANT EXAMPLE
   // Edge special_graph_edges[] = {
@@ -224,7 +315,46 @@ Graph create_graph() {
   //   Edge(1,3),
   // };
 
-  int number_of_vertices = 4;
+  // Edge complete tripartite graph
+  Edge special_graph_edges[] = {
+    Edge(0, 2),
+    Edge(0, 3),
+    Edge(0, 4),
+
+    Edge(0, 5),
+    Edge(0, 6),
+    Edge(0, 7),
+    Edge(0, 8),
+
+
+    Edge(1, 2),
+    Edge(1, 3),
+    Edge(1, 4),
+
+    Edge(1, 5),
+    Edge(1, 6),
+    Edge(1, 7),
+    Edge(1, 8),
+
+
+    Edge(5, 2),
+    Edge(5, 3),
+    Edge(5, 4),
+
+    Edge(6, 2),
+    Edge(6, 3),
+    Edge(6, 4),
+
+    Edge(7, 2),
+    Edge(7, 3),
+    Edge(7, 4),
+
+    Edge(8, 2),
+    Edge(8, 3),
+    Edge(8, 4),
+  };
+
+  int number_of_vertices = 10;
   Graph special_graph(special_graph_edges, special_graph_edges + sizeof(special_graph_edges)/sizeof(Edge), number_of_vertices);
   return special_graph;
 }

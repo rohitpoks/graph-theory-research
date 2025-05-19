@@ -3,12 +3,24 @@
 #include "graphProcessor.h"
 #include "originalToColoring.h"
 #include "eigen/Eigen/Dense"
+#include <cassert>
 
 
 static const int NUM_SIMULATIONS = 100000;
 int main() {
-  Graph original_graph = create_graph();
-  int k = 8;
+  // Graph original_graph = create_graph();
+  // int k = 4;
+
+
+  // testing trees
+  std::pair<Graph, int> tree = get_random_tree(7);
+  Graph& original_graph = tree.first;
+  int maximal_degree = tree.second;
+  int k = 5;
+  // assert(k > 2);
+  // std::cout << "k is " << k << std::endl;
+  // end testing trees
+
   std::map<int, std::map<int, int> > adj_list;
   std::set<int> special_vertex_classes;
   std::map<int, int> class_to_num_vertices;
@@ -116,15 +128,18 @@ int main() {
     put(color_map, vertex, "blue");
   }
 
-  // long double path_length = simulate_random_walk(coloring_graph, NUM_SIMULATIONS);
-  // double path_length = simulate_random_walk(coloring_graph, 10000, special_vertices);
-  // std::cout << "average path length is " << path_length << " for number of colors: " << k << std::endl;
-  int num_sims = 10000;
-  long double path_length = simulate_random_walk_with_bfs(coloring_graph, num_sims, special_vertices, n_complete_non_reconstructible_non_special_vertices);
-  std::cout << "average path length for bfs is " << path_length << " for num simulations: " << num_sims << std::endl;
+  // running simulations
+  // int num_sims = 10000;
+  // long double path_length = simulate_random_walk_with_bfs(coloring_graph, num_sims, special_vertices, n_complete_non_reconstructible_non_special_vertices);
+  // std::cout << "average path length for bfs is " << path_length << " for num simulations: " << num_sims << std::endl;
   boost::dynamic_properties dp;
   dp.property("color", get(vertex_color, coloring_graph));
   dp.property("node_id", get(boost::vertex_index, coloring_graph));
   print_graph_as_graphml(coloring_graph, "coloring_graph_" + std::to_string(k) + ".graphml", dp);
+
+
+  // // testing trees
+  // assert(special_vertices.size() + reconstructible_vertices.size() < num_vertices(coloring_graph));
+  // // end testing trees
   return 0;
 }
